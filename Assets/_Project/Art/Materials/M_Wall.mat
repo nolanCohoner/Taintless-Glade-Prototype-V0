@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Wall
+  m_Shader: {fileID: 4800000, guid: 3521baf0e44fcac47ad6136466af8a0a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 93799a5dd1bbad34484617ddcc4005ca, type: 3}
+        m_Scale: {x: 0.33333334, y: 0.33333334}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AmbientStrength: 0.5
+    - _Cutoff: 0.5
+    - _Dissolve: 0
+    - _EdgeWidth: 0.08
+    - _KeepHeight: 0.15
+    - _LightBands: 3
+    - _PixelSize: 0.2
+    - _Saturation: 1.3
+    - _ShadeSoftness: 0.02
+    - _ShadeThreshold: 0.1
+    - _ShadowPixelSize: 0.125
+    - _TextureDetail: 0.5
+    - _TopBias: 0.35
+    - _WallHeight: 3
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 0.6, g: 2, b: 1.2, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 0.5, g: 0.45, b: 0.72, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

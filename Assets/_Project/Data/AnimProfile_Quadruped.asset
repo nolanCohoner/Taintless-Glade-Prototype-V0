@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e7b0542182e2a4cbefd93609dbf578, type: 3}
+  m_Name: AnimProfile_Quadruped
+  m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.RigAnimationProfile
+  walkCyclesPerSecond: 2.2
+  runCyclesPerSecond: 3.6
+  walkLegSwing: 28
+  runLegSwing: 50
+  walkLegLift: 0.04
+  runLegLift: 0.09
+  walkBodyBob: 0.035
+  runBodyBob: 0.08
+  runBodyLean: 8
+  hipFollow: 0.5
+  breathSpeed: 2.2
+  breathAmount: 0.03
+  aimHeadInfluence: 0.6
+  moveHeadInfluence: 12
+  maxHeadAngle: 35
+  headSmoothTime: 0.08
+  headLag: 0.06
+  headBobFollow: 0.8
+  bodyAimInfluence: 0.12
+  idleTailAmplitude: 6
+  idleTailFrequency: 1.1
+  walkTailAmplitude: 14
+  runTailAmplitude: 30
+  runTailLift: 12
+  tailResponsiveness: 14
+  attackDuration: 0.18
+  headThrust: 0.12
+  bodyRecoil: 0.06
+  attackSquash: 0.12
+  attackTailFlick: 20
+  dashStretch: 0.3
+  dashLegTuck: 55
+  dashTailLift: -15
+  dashBodyAngle: -8
+  turnDuration: 0.12
+  turnStretch: 0.15
+  facingDeadZone: 0.15

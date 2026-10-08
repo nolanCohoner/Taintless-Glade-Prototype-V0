@@ -858,6 +858,16 @@ namespace TaintlessGlade.EditorTools
             go.transform.localPosition = position;
             go.transform.localScale = scale;
             go.GetComponent<Renderer>().sharedMaterial = mat;
+            // Selon la version d'Unity, CreatePrimitive n'ajoute pas toujours de collider 3D : on s'assure qu'il y en a un.
+            if (go.GetComponent<Collider>() == null)
+            {
+                switch (type)
+                {
+                    case PrimitiveType.Sphere: go.AddComponent<SphereCollider>(); break;
+                    case PrimitiveType.Capsule: go.AddComponent<CapsuleCollider>(); break;
+                    default: go.AddComponent<BoxCollider>(); break;
+                }
+            }
             if (fadeable) go.AddComponent<FadeableWall>();
             return go;
         }

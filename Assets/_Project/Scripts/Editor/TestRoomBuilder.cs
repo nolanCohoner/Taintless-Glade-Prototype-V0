@@ -747,7 +747,7 @@ namespace TaintlessGlade.EditorTools
             statsGo.transform.SetParent(dummy.transform, false);
             statsGo.transform.localPosition = new Vector3(1.6f, 1.4f, 0f);
             TextMeshPro stats = SetupText(statsGo, a, 3f, "Total 0\nDPS 0");
-            stats.fontStyle = FontStyles.Normal;
+            stats.fontStyle = FontStyles.Bold;
             stats.horizontalAlignment = HorizontalAlignmentOptions.Left;
             stats.color = new Color(0.85f, 0.9f, 0.85f);
             statsGo.AddComponent<Billboard>();
@@ -962,6 +962,7 @@ namespace TaintlessGlade.EditorTools
             light.color = new Color(1f, 0.62f, 0.3f);
             light.range = 7f;
             light.intensity = 3f;
+            TorchShadowInstaller.Configure(light);
             lightGo.AddComponent<LightFlicker>();
         }
 

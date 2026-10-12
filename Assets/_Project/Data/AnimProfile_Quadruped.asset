@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.RigAnimationProfile
   walkCyclesPerSecond: 2.2
   runCyclesPerSecond: 3.6
-  walkLegSwing: 28
-  runLegSwing: 50
-  walkLegLift: 0.04
-  runLegLift: 0.09
-  walkBodyBob: 0.035
-  runBodyBob: 0.08
-  runBodyLean: 8
+  walkLegLift: 0.06
+  runLegLift: 0.13
+  walkBodyBob: 0.04
+  runBodyBob: 0.09
+  runBodyLean: 6
   hipFollow: 0.5
   breathSpeed: 2.2
   breathAmount: 0.03
@@ -43,7 +41,7 @@ MonoBehaviour:
   attackSquash: 0.12
   attackTailFlick: 20
   dashStretch: 0.3
-  dashLegTuck: 55
+  dashLegTuck: 40
   dashTailLift: -15
   dashBodyAngle: -8
   turnDuration: 0.12

@@ -8,6 +8,8 @@ namespace TaintlessGlade
         public Vector3 point;
         public Vector3 direction;
         public GameObject source;
+        /// <summary>Coup du rayon arc-en-ciel (impact multicolore).</summary>
+        public bool rainbow;
     }
 
     public interface IDamageable

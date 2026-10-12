@@ -12,8 +12,13 @@ namespace TaintlessGlade
         [Header("Marche / Course")]
         public float walkCyclesPerSecond = 2.2f;
         public float runCyclesPerSecond = 3.6f;
-        public float walkLegSwing = 28f;
-        public float runLegSwing = 50f;
+        [Tooltip("Amplitude avant/arrière du pas (unités).")] public float walkStride = 0.05f;
+        public float runStride = 0.12f;
+        [Tooltip("Inclinaison du pied pendant le pas (degrés).")] public float stepTilt = 10f;
+        [Tooltip("0 = trot en diagonale, 1 = bonds (pattes avant ensemble, puis arrière) en course.")]
+        [Range(0f, 1f)] public float runGallop = 0.8f;
+        [Tooltip("Roulis du corps à chaque pas (degrés).")] public float bodyRoll = 3f;
+        [Tooltip("Le corps s'étire en haut du rebond et s'écrase en bas.")] public float stepStretch = 0.08f;
         public float walkLegLift = 0.04f;
         public float runLegLift = 0.09f;
         public float walkBodyBob = 0.035f;
@@ -58,10 +63,57 @@ namespace TaintlessGlade
 
         [Header("Esquive (dash)")]
         public float dashStretch = 0.3f;
-        public float dashLegTuck = 55f;
+        public float dashLegTuck = 40f;
+        [Tooltip("Pattes avant tendues devant / arrière derrière pendant le dash (unités).")] public float dashLegStretch = 0.14f;
+        public float dashLegLift = 0.08f;
         [Tooltip("Angle relatif de la queue pendant le dash (négatif = vers le bas / tendue).")]
         public float dashTailLift = -15f;
         public float dashBodyAngle = -8f;
+
+        [Header("Tentacules (tête et queue)")]
+        public float tentacleIdleAmplitude = 4f;
+        public float tentacleMoveAmplitude = 9f;
+        public float tentacleAttackAmplitude = 14f;
+        public float tentacleDashAmplitude = 12f;
+        public float tentacleIdleFrequency = 0.7f;
+        public float tentacleMoveFrequency = 2.4f;
+        [Tooltip("Les tentacules traînent derrière le rebond du corps (angle par unité de vitesse verticale).")]
+        public float tentacleDrag = 6f;
+        [Tooltip("Les tentacules se relèvent en dash.")]
+        public float tentacleDashLift = 22f;
+        public float tentacleResponsiveness = 14f;
+
+        [Header("Arme (arc) et regard")]
+        [Tooltip("0 = la patte avant balance normalement, 1 = elle tient l'arme pointée vers la visée.")]
+        [Range(0f, 1f)] public float bowHold = 0.9f;
+        [Tooltip("Recul de l'arme au tir (unités).")]
+        public float bowKick = 0.07f;
+        [Tooltip("La patte avant éloignée tire la corde : angle de recul pendant le tir.")]
+        public float drawPawAngle = 25f;
+        [Tooltip("Recul de la patte qui tire la corde (unités).")] public float drawPawPull = 0.1f;
+        [Tooltip("Distance dont la patte avant se tend vers la visée pour tenir l'arme (unités).")] public float bowPawReach = 0.16f;
+        [Tooltip("Distance écran (pixels) au-delà de laquelle les iris sont au maximum de leur course.")]
+        public float irisFullDistance = 90f;
+        public float irisSpeed = 30f;
+
+        [Header("Sueur (course rapide / dash)")]
+        public float sweatRunDrops = 7f;
+        public float sweatDashDrops = 35f;
+
+        [Header("Naturel (anticipation, irrégularité, repos vivant)")]
+        [Tooltip("Variation aléatoire de chaque foulée (0.15 = ±15 % de longueur, un peu plus sur la hauteur).")]
+        [Range(0f, 0.4f)] public float stepVariation = 0.15f;
+        [Tooltip("Rebond asymétrique : la montée est plus lente que la chute (0 = sinus parfait).")]
+        [Range(0f, 0.4f)] public float stepAsymmetry = 0.18f;
+        [Tooltip("Temps (s) avant le tir pendant lequel le perso se contracte (tir maintenu).")]
+        public float windupTime = 0.1f;
+        [Tooltip("Recul du corps pendant l'anticipation du tir (unités).")]
+        public float windupPull = 0.035f;
+        [Tooltip("Durée (s) de la contraction au début du dash.")]
+        public float dashAnticipation = 0.07f;
+        [Tooltip("Délai aléatoire entre deux petits événements au repos (tête penchée, coup de queue...).")]
+        public float idleEventMinDelay = 2.5f;
+        public float idleEventMaxDelay = 6f;
 
         [Header("Demi-tour")]
         public float turnDuration = 0.12f;

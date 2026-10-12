@@ -793,6 +793,8 @@ namespace TaintlessGlade.EditorTools
             animator.rig = rig;
             animator.profile = a.quadrupedProfile;
             player.AddComponent<PlayerAnimationDriver>().characterAnimator = animator;
+
+            AxolotlSpriteInstaller.Apply(rig);
         }
 
         static CharacterRig.Leg Leg(string name, Transform parent, Vector3 hip, bool front, bool far, Color color, int order, BuildContext a)

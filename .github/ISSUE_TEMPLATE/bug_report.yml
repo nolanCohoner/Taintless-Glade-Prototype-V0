@@ -1,0 +1,56 @@
+name: Bug
+description: Signaler un comportement incorrect dans le jeu ou les outils
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Que se passe-t-il ?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Etapes pour reproduire
+      placeholder: |
+        1. Ouvrir la scene TestRoom
+        2. Lancer le jeu
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+    validations:
+      required: true
+  - type: input
+    id: scene
+    attributes:
+      label: Scene concernee
+      placeholder: Assets/_Project/Scenes/TestRoom.unity
+  - type: input
+    id: unity-version
+    attributes:
+      label: Version de l'editeur Unity
+      placeholder: 6000.5.9f1
+    validations:
+      required: true
+  - type: dropdown
+    id: context
+    attributes:
+      label: Ou est-ce arrive ?
+      options:
+        - Dans l'editeur (Play Mode)
+        - Dans un build
+        - A la compilation
+        - Dans la CI
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs de la console et captures
+      description: Colle les erreurs de la console Unity et ajoute une capture ou une video si possible.
+      render: text

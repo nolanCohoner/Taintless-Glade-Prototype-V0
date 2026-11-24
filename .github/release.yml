@@ -1,0 +1,31 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - dependabot
+      - github-actions
+  categories:
+    - title: Nouveautes
+      labels:
+        - enhancement
+    - title: Corrections
+      labels:
+        - bug
+    - title: Scenes et niveaux
+      labels:
+        - scene
+    - title: Art et contenu
+      labels:
+        - art
+    - title: Code et technique
+      labels:
+        - code
+        - tests
+        - settings
+    - title: CI et outils
+      labels:
+        - ci
+    - title: Autres changements
+      labels:
+        - '*'

@@ -1,0 +1,36 @@
+name: Notify on main failure
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  notify:
+    name: Notify the team
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+      RUN_URL: ${{ github.event.workflow_run.html_url }}
+      TITLE: ${{ github.event.workflow_run.display_title }}
+      SHA: ${{ github.event.workflow_run.head_sha }}
+      ACTOR: ${{ github.event.workflow_run.triggering_actor.login }}
+    steps:
+      - name: Send the notification
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "::notice::NOTIFY_WEBHOOK_URL is not set, notification skipped"
+            exit 0
+          fi
+          message="CI rouge sur main : ${TITLE} (${SHA:0:7}) par ${ACTOR} - ${RUN_URL}"
+          if [[ "$WEBHOOK_URL" == *discord* ]]; then
+            payload=$(jq -n --arg msg "$message" '{content: $msg, allowed_mentions: {parse: []}}')
+          else
+            payload=$(jq -n --arg msg "$message" '{text: $msg}')
+          fi
+          curl -fsS -X POST -H "Content-Type: application/json" -d "$payload" "$WEBHOOK_URL"

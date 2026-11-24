@@ -178,3 +178,16 @@ LightingData.asset     binary
 .gitleaks.toml          text eol=lf
 *.yaml                  text eol=lf
 *.yml                   text eol=lf
+
+# Binary source files that cannot be merged: use "git lfs lock" before editing them
+*.psd                   lockable
+*.ai                    lockable
+*.kra                   lockable
+*.ase                   lockable
+*.aseprite              lockable
+*.fbx                   lockable
+*.blend                 lockable
+*.ma                    lockable
+*.mb                    lockable
+*.max                   lockable
+*.wav                   lockable

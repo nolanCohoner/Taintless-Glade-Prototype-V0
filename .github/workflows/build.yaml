@@ -39,19 +39,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           lfs: true
           fetch-depth: 0
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: Library
           key: Library-build-StandaloneWindows64-${{ hashFiles('Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}
           restore-keys: |
             Library-build-StandaloneWindows64-
 
-      - uses: game-ci/unity-builder@v4
+      - uses: game-ci/unity-builder@v6
         id: build
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -63,7 +63,7 @@ jobs:
           buildName: TaintlessGlade
           versioning: Semantic
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: TaintlessGlade-Windows-${{ steps.build.outputs.buildVersion }}
           path: build/StandaloneWindows64

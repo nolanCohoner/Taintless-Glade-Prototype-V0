@@ -187,8 +187,11 @@ namespace TaintlessGlade.EditorTools
             pivot.localPosition = ToLocal(root) - ToLocal(parentJoint);
             AddLayer(name + "_Art", pivot, name, root, order, Color.white, material);
             // Pointe vers la droite si la racine est du côté droit du point d'attache.
-            return new CharacterRig.Tentacle { pivot = pivot, direction = root.x >= parentJoint.x ? 1f : -1f, phase = phase, amplitude = 1f,
-                frequency = FrequencyVariety[index % FrequencyVariety.Length], responsiveness = ResponsivenessVariety[index % ResponsivenessVariety.Length] };
+            return new CharacterRig.Tentacle
+            {
+                pivot = pivot, direction = root.x >= parentJoint.x ? 1f : -1f, phase = phase, amplitude = 1f,
+                frequency = FrequencyVariety[index % FrequencyVariety.Length], responsiveness = ResponsivenessVariety[index % ResponsivenessVariety.Length]
+            };
         }
 
         /// <summary>Rectangle rouge debout, centré sur le pivot "Bow" (pivot du sprite carré = bas-centre).</summary>

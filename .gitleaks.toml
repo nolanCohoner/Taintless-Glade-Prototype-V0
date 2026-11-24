@@ -1,0 +1,10 @@
+title = "Taintless Glade gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Third-party asset packs"
+paths = [
+  '''^Assets/(Hovl Studio|GabrielAguiarProductions|AS_Magic_Aura_Construction_Kit_FREE|FullOpaqueSpell)/''',
+]

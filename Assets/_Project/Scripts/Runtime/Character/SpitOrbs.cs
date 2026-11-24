@@ -18,11 +18,11 @@ namespace TaintlessGlade
         {
             [Tooltip("Pivot de la boule, placé au centre du dessin : c'est lui qui flotte, tourne et gonfle.")] public Transform pivot;
             [Tooltip("Position de repos (unités), dans le référentiel de l'arme.")] public Vector2 home;
-            [Tooltip("Rythme de flottaison propre à la boule (cycles par seconde).")] [Range(0.2f, 2f)] public float frequency = 0.6f;
+            [Tooltip("Rythme de flottaison propre à la boule (cycles par seconde).")][Range(0.2f, 2f)] public float frequency = 0.6f;
             [Tooltip("Décalage de l'onde pour que les boules ne flottent pas en même temps.")] public float phase;
             [Tooltip("Amplitude de flottaison au repos (unités).")] public float amplitude = 0.035f;
-            [Tooltip("Retard pris dans les déplacements : 0 = collée à l'arme, 1 = traîne beaucoup.")] [Range(0f, 1.5f)] public float inertia = 0.8f;
-            [Tooltip("Partie du tir (0..0.5) qui s'écoule avant que cette boule réagisse : elles partent en cascade.")] [Range(0f, 0.5f)] public float shotDelay;
+            [Tooltip("Retard pris dans les déplacements : 0 = collée à l'arme, 1 = traîne beaucoup.")][Range(0f, 1.5f)] public float inertia = 0.8f;
+            [Tooltip("Partie du tir (0..0.5) qui s'écoule avant que cette boule réagisse : elles partent en cascade.")][Range(0f, 0.5f)] public float shotDelay;
 
             [NonSerialized] public Vector2 position, velocity;
             [NonSerialized] public float time, kickIn;

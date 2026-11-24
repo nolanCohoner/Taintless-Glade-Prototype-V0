@@ -1,0 +1,10 @@
+172515602e62fb746b5d573b38a5fe58  # com.unity.render-pipelines.core@a4c9a9793789/Runtime/Volume/Volume.cs.meta
+d7fd9488000d3734a9e00ee676215985  # com.unity.render-pipelines.core@a4c9a9793789/Runtime/Volume/VolumeProfile.cs.meta
+0b2db86121404754db890f4c8dfe81b2  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/Overrides/Bloom.cs.meta
+66f335fb1ffd8684294ad653bf1c7564  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/Overrides/ColorAdjustments.cs.meta
+97c23e3b12dc18c42a140437e53d3951  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/Overrides/Tonemapping.cs.meta
+899c54efeace73346a0a16faa3afe726  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/Overrides/Vignette.cs.meta
+a79441f348de89743a2939f4d699eac1  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/UniversalAdditionalCameraData.cs.meta
+474bcb49853aa07438625e644c072ee6  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/UniversalAdditionalLightData.cs.meta
+71c1514a6bd24e1e882cebbe1904ce04  # com.unity.ugui@1c4864518158/Runtime/TMP/TMP_FontAsset.cs.meta
+9541d86e2fd84c1d9990edf0852d74ab  # com.unity.ugui@1c4864518158/Runtime/TMP/TextMeshPro.cs.meta

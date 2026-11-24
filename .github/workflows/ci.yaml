@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  hygiene:
+    name: Project hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Lint GitHub workflows
+        run: docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:latest -color
+
+      - name: Check Unity project integrity
+        run: bash .github/scripts/check_project.sh
+
+  license:
+    name: Unity license available
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      available: ${{ steps.check.outputs.available }}
+    steps:
+      - id: check
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |
+          if [ -n "$UNITY_LICENSE" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::UNITY_LICENSE secret is missing, Unity tests are skipped"
+          fi
+
+  tests:
+    name: Unity ${{ matrix.testMode }} tests
+    needs: [hygiene, license]
+    if: needs.license.outputs.available == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        testMode: [EditMode, PlayMode]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ matrix.testMode }}-${{ hashFiles('Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: |
+            Library-${{ matrix.testMode }}-
+
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: auto
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: ${{ matrix.testMode }}-results
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Unity ${{ matrix.testMode }} results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.testMode }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
+          retention-days: 14
+
+  ci-status:
+    name: CI status
+    needs: [hygiene, license, tests]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Fail if a required job failed or was cancelled
+        run: |
+          echo "hygiene=${{ needs.hygiene.result }} license=${{ needs.license.result }} tests=${{ needs.tests.result }}"
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then
+            exit 1
+          fi

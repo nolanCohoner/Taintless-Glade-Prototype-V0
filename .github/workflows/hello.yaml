@@ -1,11 +1,6 @@
-# TP 1 : workflow simple, pour valider que GitHub Actions fonctionne sur le repo.
 name: Hello CI
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 env:
@@ -17,20 +12,19 @@ jobs:
     steps:
       - run: echo "Coucou depuis la CI, MA_VARIABLE=$MA_VARIABLE"
 
-      # Action externe officielle : récupère le code du repo (sans LFS ici, inutile)
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Variables créées automatiquement par GitHub Actions
+      - name: Automatic GitHub variables
         run: |
           echo "REF        : $GITHUB_REF"
           echo "SHA        : $GITHUB_SHA"
           echo "RUN_ID     : $GITHUB_RUN_ID"
           echo "REPOSITORY : $GITHUB_REPOSITORY"
 
-      - name: Contenu du repo
+      - name: Repository content
         run: ls -la
 
-      - name: Appel API avec gh
+      - name: GitHub API call with gh
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api repos/$GITHUB_REPOSITORY --jq '.full_name, .default_branch'

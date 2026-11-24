@@ -158,13 +158,13 @@ namespace TaintlessGlade.EditorTools
                 AddLayer(leg.pivot.name + "_Art", leg.pivot, "paw", PawDrawnJoint, leg.far ? 0 : 1, leg.far ? FarTint : Color.white, material);
             }
 
-            // --- Arme : carré rouge générique (futur arc arc-en-ciel), tenu par la patte avant proche ---
+            // --- Arme : boules de crachat (halo + 3 boules animées par SpitOrbs), tenues par la patte avant proche ---
             Transform oldBow = rig.transform.Find("Bow");
             if (oldBow != null) Undo.DestroyObjectImmediate(oldBow.gameObject);
             var bow = new GameObject("Bow").transform;
             Undo.RegisterCreatedObjectUndo(bow.gameObject, "Axolotl bow");
             bow.SetParent(rig.transform, false);
-            AddBowSquare(bow, GetOverlayMaterial());
+            SpitWeaponInstaller.Build(bow);
             rig.bow = bow;
             rig.irisTravel = 30f / PixelsPerUnit;
             rig.bowReach = 0.42f;
@@ -222,7 +222,7 @@ namespace TaintlessGlade.EditorTools
         }
 
         /// <summary>Matériau sprite sans test de profondeur : l'arc (2 u de haut) ne disparaît plus dans le sol quand il descend sous les pieds.</summary>
-        static Material GetOverlayMaterial()
+        internal static Material GetOverlayMaterial()
         {
             const string path = "Assets/_Project/Art/Materials/M_SpriteOverlay.mat";
             var material = AssetDatabase.LoadAssetAtPath<Material>(path);
@@ -306,7 +306,7 @@ namespace TaintlessGlade.EditorTools
             ConfigureSprite(BowTexturePath, BowPixelsPerUnit);
         }
 
-        static void ConfigureSprite(string path, float pixelsPerUnit)
+        internal static void ConfigureSprite(string path, float pixelsPerUnit)
         {
             var importer = AssetImporter.GetAtPath(path) as TextureImporter;
             if (importer == null) { Debug.LogWarning("[Axolotl] Texture introuvable : " + path); return; }

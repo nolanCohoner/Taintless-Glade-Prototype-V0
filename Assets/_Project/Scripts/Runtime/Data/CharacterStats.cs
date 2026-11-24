@@ -29,8 +29,8 @@ namespace TaintlessGlade
         [Header("Conversion GDD -> unités monde")]
         public float speedToMetersPerSecond = 2.5f;
         public float dashToMeters = 1.75f;
-        public float shotSpeedToMetersPerSecond = 6f;
-        public float shotLengthToMeters = 2.5f;
+        public float shotSpeedToMetersPerSecond = 16f;
+        public float shotLengthToMeters = 4.5f;
 
         public float MoveSpeed => speed * speedToMetersPerSecond;
         public float DashDistance => dashSpeed * dashToMeters;

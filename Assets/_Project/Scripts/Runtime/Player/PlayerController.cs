@@ -29,6 +29,9 @@ namespace TaintlessGlade
         public float aimPlaneHeight = 0.5f;
 
         public Vector3 AimDirection { get; private set; } = Vector3.forward;
+        public Vector3 DashDirection => _dashDirection;
+        /// <summary>Déclenché au début du dash (position de départ) et à son arrivée (position d'arrivée).</summary>
+        public event System.Action DashStarted, DashEnded;
         public bool IsDashing => _dashTimer > 0f;
         public bool IsRunning { get; private set; }
         public Vector3 Velocity => _velocity;
@@ -43,11 +46,20 @@ namespace TaintlessGlade
         float _dashTimer;
         float _dashCooldownTimer;
         Vector3 _dashDirection;
+        Vector3 _impulse;
+
+        /// <summary>Petite poussée qui retombe vite (recul du tir).</summary>
+        public void Recoil(Vector3 velocity)
+        {
+            if (!IsDashing) _impulse += velocity;
+        }
 
         void Awake()
         {
             _cc = GetComponent<CharacterController>();
             _controls = GetComponent<PlayerControls>();
+            if (GetComponent<DashVfx>() == null) gameObject.AddComponent<DashVfx>();
+            if (GetComponent<PlayerHealth>() == null) gameObject.AddComponent<PlayerHealth>();
         }
 
         void Update()
@@ -67,7 +79,10 @@ namespace TaintlessGlade
                 _dashTimer -= dt;
                 _velocity = _dashDirection * (stats.DashDistance / dashDuration);
                 if (!IsDashing)
+                {
                     _velocity = _dashDirection * stats.MoveSpeed;
+                    DashEnded?.Invoke();
+                }
             }
             else
             {
@@ -80,7 +95,8 @@ namespace TaintlessGlade
             else
                 _verticalVelocity += gravity * dt;
 
-            _cc.Move((_velocity + Vector3.up * _verticalVelocity) * dt);
+            _impulse = Vector3.MoveTowards(_impulse, Vector3.zero, 20f * dt);
+            _cc.Move((_velocity + _impulse + Vector3.up * _verticalVelocity) * dt);
 
             if (aimIndicator != null)
                 aimIndicator.rotation = Quaternion.LookRotation(AimDirection, Vector3.up);
@@ -91,7 +107,7 @@ namespace TaintlessGlade
             _dashDirection = direction;
             _dashTimer = dashDuration;
             _dashCooldownTimer = dashCooldown;
-            if (dashParticles != null) dashParticles.Play();
+            DashStarted?.Invoke();
             if (spritePunch != null) spritePunch.Punch(new Vector3(-0.3f, 0.3f, 0f));
         }
 

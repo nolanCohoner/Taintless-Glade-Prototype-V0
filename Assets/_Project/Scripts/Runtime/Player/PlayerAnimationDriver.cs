@@ -14,7 +14,6 @@ namespace TaintlessGlade
         PlayerController _controller;
         PlayerControls _controls;
         PlayerAttack _attack;
-        RainbowBeam _beam;
 
         void Awake()
         {
@@ -31,7 +30,6 @@ namespace TaintlessGlade
         void OnDisable()
         {
             if (_attack != null) _attack.Fired -= OnFired;
-            if (_beam != null) { _beam.Ticked -= OnFired; _beam = null; }
         }
 
         void Update()
@@ -47,20 +45,6 @@ namespace TaintlessGlade
             float windupTime = characterAnimator.profile != null ? Mathf.Max(characterAnimator.profile.windupTime, 0.01f) : 0.1f;
             bool charging = _attack != null && _attack.IsCharging && _attack.CooldownRemaining > 0f;
             characterAnimator.AttackWindup = charging ? 1f - Mathf.Clamp01(_attack.CooldownRemaining / windupTime) : 0f;
-
-            // Rayon arc-en-ciel : le perso se contracte de plus en plus pendant la charge, puis reste campé pendant le tir.
-            RainbowBeam beam = _attack != null ? _attack.Beam : null;
-            if (beam != null)
-            {
-                if (_beam != beam)
-                {
-                    if (_beam != null) _beam.Ticked -= OnFired;
-                    _beam = beam;
-                    _beam.Ticked += OnFired;
-                }
-                float beamPose = beam.IsFiring ? 0.6f : Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.25f, 1f, beam.Charge01));
-                characterAnimator.AttackWindup = Mathf.Max(characterAnimator.AttackWindup, beamPose);
-            }
 
             Camera cam = Camera.main;
             if (cam == null) return;

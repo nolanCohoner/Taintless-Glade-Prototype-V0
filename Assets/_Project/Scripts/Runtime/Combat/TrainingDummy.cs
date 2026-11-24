@@ -15,8 +15,6 @@ namespace TaintlessGlade
         public Color flashColor = Color.white;
         public float flashDuration = 0.08f;
         public GameObject hitVfxPrefab;
-        [Tooltip("Impact frames 2D (étoile, anneau, gouttes) à la place du prefab de particules.")]
-        public bool use2DHitFx = true;
         public float cameraShakeStrength = 0.08f;
         public float cameraShakeDuration = 0.1f;
 
@@ -48,13 +46,10 @@ namespace TaintlessGlade
             _recentHits.Enqueue((Time.time, info.amount));
 
             _flashTimer = flashDuration;
-            if (spritePunch != null) spritePunch.Punch(new Vector3(0.25f, -0.2f, 0f));
+            if (spritePunch != null) spritePunch.Punch(new Vector3(0.25f, -0.2f, 0f) * (1f + info.knockback * 0.2f));
             if (damageNumbers != null) damageNumbers.Show(info.amount);
-            if (use2DHitFx)
-            {
-                Color tint = info.rainbow ? Fx2D.Rainbow[Random.Range(0, Fx2D.Rainbow.Length)] : Fx2D.SpitColor;
-                Fx2D.SpawnImpact(info.point, tint, info.rainbow ? 1.9f : 1.1f);
-            }
+            // Avec les effets 3D, les projectiles jouent déjà leur propre impact.
+            if (Vfx3D.Available) { }
             else if (hitVfxPrefab != null)
             {
                 Vector3 back = info.direction.sqrMagnitude > 0f ? -info.direction : Vector3.back;

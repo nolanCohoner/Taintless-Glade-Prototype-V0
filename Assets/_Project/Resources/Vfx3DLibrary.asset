@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3f1a9e7b2d4e60a8f4d1c2b3e5a697, type: 3}
+  m_Name: Vfx3DLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.Vfx3DLibrary
+  spellShot: {fileID: 8735408722482519607, guid: a048bcf1214005047861302d0a4515da, type: 3}
+  muzzle: {fileID: 6980259576133684760, guid: 1f58a1dea6bbd9347843e4935585e6a2, type: 3}
+  impact: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+  hovlBullets:
+  - {fileID: 678138013338386963, guid: 658d046b38b9935498936eaed505d73f, type: 3}
+  hovlImpacts:
+  - {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
+  - {fileID: 4535006216103734310, guid: 98c4704d0fd7211449bcf5c451095a60, type: 3}
+  - {fileID: 4386588507499592971, guid: 48e196c36363e814bad43a44c92dc11b, type: 3}
+  boltCore: {fileID: 7626139322179216226, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+  boltSparks: {fileID: 8822187405165230804, guid: fb66a85d95aa25e439cb3c7792564804, type: 3}
+  boltBubble: {fileID: 21300000, guid: 15b7177279b984c4995d6c52c8326eae, type: 3}
+  boltRing: {fileID: 21300000, guid: 221c0649879e4ed42b2d7ca7caf01cd3, type: 3}
+  boltOrb: {fileID: 7761031033666763820, guid: 1eb833340b41fb444b576c4dced8d4dc, type: 3}
+  boltSparksExtra: {fileID: 7045889733438899885, guid: 14078f8f7064d894fad9a68275c46f31, type: 3}
+  boltAura: {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000, type: 3}
+  chargeAura:
+  - {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000, type: 3}
+  boltChargedExplosion:
+  - {fileID: 8378648546881499446, guid: 867c572a5be680d42a042d2349f10143, type: 3}
+  - {fileID: 8464950693656172981, guid: 83ad694f134ab954580473212156b35a, type: 3}
+  boltLaunch:
+  - {fileID: 952961124639765284, guid: 1095a5c9f65bfbe4383f63d5d1886c65, type: 3}
+  boltBounce:
+  - {fileID: 952961124639765284, guid: 1095a5c9f65bfbe4383f63d5d1886c65, type: 3}
+  - {fileID: 4535006216103734310, guid: 98c4704d0fd7211449bcf5c451095a60, type: 3}
+  boltExplosion:
+  - {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
+  - {fileID: 4535006216103734310, guid: 98c4704d0fd7211449bcf5c451095a60, type: 3}
+  - {fileID: 952961124639765284, guid: 1095a5c9f65bfbe4383f63d5d1886c65, type: 3}
+  boltFlash: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+  dashStart:
+  - {fileID: 952961124639765284, guid: 1095a5c9f65bfbe4383f63d5d1886c65, type: 3}
+  - {fileID: 5610010966355794069, guid: 803ecf87f61d9fb4f84ba6319ba95c9c, type: 3}
+  dashTrail:
+  - {fileID: 7626139322179216226, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+  - {fileID: 8822187405165230804, guid: fb66a85d95aa25e439cb3c7792564804, type: 3}
+  dashEnd:
+  - {fileID: 952961124639765284, guid: 1095a5c9f65bfbe4383f63d5d1886c65, type: 3}
+  - {fileID: 4535006216103734310, guid: 98c4704d0fd7211449bcf5c451095a60, type: 3}
+  sweat: {fileID: 4636871227284738347, guid: 1731425cf73de7541b40acd38dba18ec, type: 3}
+  sweatDropMaterial: {fileID: 2100000, guid: 65700cbb3b887cd4e9ba3c6960267cb1, type: 2}

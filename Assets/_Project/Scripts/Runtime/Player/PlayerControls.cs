@@ -14,12 +14,20 @@ namespace TaintlessGlade
         InputAction _attack;
         InputAction _dash;
         InputAction _run;
+        InputAction _color;
+        InputAction _bullet;
 
         public Vector2 Move => _move.ReadValue<Vector2>();
         public Vector2 AimStick => _aimStick.ReadValue<Vector2>();
         public bool AttackHeld => _attack.IsPressed();
+        public bool AttackPressed => _attack.WasPressedThisFrame();
+        public bool AttackReleased => _attack.WasReleasedThisFrame();
         public bool DashPressed => _dash.WasPressedThisFrame();
         public bool RunHeld => _run.IsPressed();
+        /// <summary>Bascule la couleur du crachat (cyan / arc-en-ciel).</summary>
+        public bool ColorTogglePressed => _color.WasPressedThisFrame();
+        /// <summary>Passe au style de balle suivant (Arcane d'origine, puis les effets du pack Hovl).</summary>
+        public bool BulletCyclePressed => _bullet.WasPressedThisFrame();
         public bool UsingMouseAim { get; private set; } = true;
         public Vector2 PointerPosition => Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
 
@@ -49,6 +57,14 @@ namespace TaintlessGlade
             _run.AddBinding("<Keyboard>/leftShift");
             _run.AddBinding("<Gamepad>/leftStickPress");
             _run.AddBinding("<Gamepad>/leftShoulder");
+
+            _color = new InputAction("SpitColor", InputActionType.Button);
+            _color.AddBinding("<Keyboard>/c");
+            _color.AddBinding("<Gamepad>/buttonNorth");
+
+            _bullet = new InputAction("BulletStyle", InputActionType.Button);
+            _bullet.AddBinding("<Keyboard>/v");
+            _bullet.AddBinding("<Gamepad>/dpad/right");
         }
 
         void OnEnable()
@@ -58,6 +74,8 @@ namespace TaintlessGlade
             _attack.Enable();
             _dash.Enable();
             _run.Enable();
+            _color.Enable();
+            _bullet.Enable();
         }
 
         void OnDisable()
@@ -67,6 +85,8 @@ namespace TaintlessGlade
             _attack.Disable();
             _dash.Disable();
             _run.Disable();
+            _color.Disable();
+            _bullet.Disable();
         }
 
         void OnDestroy()
@@ -76,6 +96,7 @@ namespace TaintlessGlade
             _attack.Dispose();
             _dash.Dispose();
             _run.Dispose();
+            _color.Dispose();
         }
 
         void Update()

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7524d252fbf16c046b42a77fcfe37711, type: 3}
+  m_Name: HudConfig
+  m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.HudConfig
+  frame: {fileID: 21300000, guid: eeaa7b775d69ccf4e90e936f7717594f, type: 3}
+  frameWidth: 750
+  bottomMargin: 0
+  horizontalOffset: 0
+  heartFrame: {fileID: 21300000, guid: d772e72c8a7d9fc4380bf8b41a8cd6b1, type: 3}
+  reflectionFrames:
+  - {fileID: 21300000, guid: d7c4871a5ce21bd44b3d8b90775333d8, type: 3}
+  - {fileID: 21300000, guid: 85d0a8601f68364479c5d6f62a3d499c, type: 3}
+  - {fileID: 21300000, guid: b9c1ebc7b7d71f1458dd9261d5320898, type: 3}
+  - {fileID: 21300000, guid: 34b77aa71cfd6a947bcdcb7052aa7aca, type: 3}
+  - {fileID: 21300000, guid: 5eb6fbc79814e984096c5ad8050b7177, type: 3}
+  - {fileID: 21300000, guid: d23d5d23a6d2d0248bb37221a76f02b0, type: 3}
+  - {fileID: 21300000, guid: 7ae1416394c5ba748b83254a9e642a05, type: 3}
+  - {fileID: 21300000, guid: 572bbe53db63edb4983f9a388b57fcb6, type: 3}
+  - {fileID: 21300000, guid: 34ffc89fd9afa4f45be42f8b80662a44, type: 3}
+  heartSize: 230
+  heartOffset: {x: 0, y: -6}
+  reflectionInterval: 10
+  reflectionFps: 14

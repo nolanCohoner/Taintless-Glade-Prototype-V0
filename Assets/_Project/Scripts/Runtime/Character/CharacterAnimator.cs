@@ -32,6 +32,17 @@ namespace TaintlessGlade
         /// <summary>0..1 : le tir part bientôt (anticipation : le corps se contracte, la corde se tend).</summary>
         public float AttackWindup { get; set; }
 
+        // --- Sorties (état lissé, lu par les éléments qui réagissent au mouvement : boules de crachat...) ---
+        /// <summary>0..1 : le perso marche (0 = immobile).</summary>
+        public float Move01 => _move;
+        /// <summary>0..1 : le perso court (0 = marche ou immobile).</summary>
+        public float Run01 => _run;
+        public float Dash01 => _dash;
+        /// <summary>0..1 : anticipation du tir (lissée).</summary>
+        public float Windup01 => _windup;
+        /// <summary>0..1 : avancement de l'animation de tir (1 = pas de tir en cours).</summary>
+        public float AttackProgress => _attackT;
+
         int _facing = 1;
         float _prevBobY, _bobVelocity;
         float[] _tentacleAngle = System.Array.Empty<float>();

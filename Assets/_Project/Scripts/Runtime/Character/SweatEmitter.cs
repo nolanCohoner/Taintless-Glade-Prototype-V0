@@ -17,6 +17,9 @@ namespace TaintlessGlade
         public float lifetime = 0.55f;
         public float gravity = 2.6f;
         public float dropScale = 0.3f;
+        [Tooltip("Effet 3D (Free Quick Effects) à la place des sprites 2D si la bibliothèque existe.")]
+        public bool use3D = true;
+        public float sweat3DScale = 1f;
 
         class Drop
         {
@@ -33,12 +36,69 @@ namespace TaintlessGlade
         readonly List<Drop> _active = new List<Drop>();
         readonly Stack<Drop> _pool = new Stack<Drop>();
         float _spawnDebt;
+        GameObject _fx3D;
+        ParticleSystem[] _fxSystems;
+
+        /// <summary>Transforme la pluie du pack en grosses gouttes qui giclent du crâne puis retombent (appelé aussi par l'outil de prévisualisation).</summary>
+        public static void Configure3D(GameObject fx, Vector2 skullRadius, Material dropMaterial = null)
+        {
+            foreach (ParticleSystem ps in fx.GetComponentsInChildren<ParticleSystem>(true))
+            {
+                var renderer = ps.GetComponent<ParticleSystemRenderer>();
+                if (dropMaterial != null && renderer != null)
+                {
+                    // Gouttes rondes étirées dans le sens de la chute, avec la texture ronde du pack.
+                    renderer.sharedMaterial = dropMaterial;
+                    renderer.renderMode = ParticleSystemRenderMode.Stretch;
+                    renderer.lengthScale = 1.8f;
+                    renderer.velocityScale = 0.08f;
+                    renderer.cameraVelocityScale = 0f;
+                }
+                var main = ps.main;
+                main.loop = true;
+                main.startColor = new Color(1f, 1f, 1f, 1f);
+                main.simulationSpace = ParticleSystemSimulationSpace.World;
+                main.startLifetime = new ParticleSystem.MinMaxCurve(0.4f, 0.7f);
+                main.startSize3D = false;
+                main.startSize = new ParticleSystem.MinMaxCurve(0.1f, 0.18f);
+                main.startSpeed = new ParticleSystem.MinMaxCurve(0.6f, 1.6f);
+                main.gravityModifier = 1.1f;
+                main.maxParticles = 200;
+
+                var shape = ps.shape;
+                shape.enabled = true;
+                shape.shapeType = ParticleSystemShapeType.Hemisphere;
+                shape.radius = skullRadius.x;
+                shape.rotation = new Vector3(-90f, 0f, 0f); // hémisphère tournée vers le haut
+                shape.scale = new Vector3(1f, skullRadius.y / skullRadius.x, 1f);
+                shape.position = Vector3.zero;
+
+                var vel = ps.velocityOverLifetime;
+                vel.enabled = false;
+                var force = ps.forceOverLifetime;
+                force.enabled = false;
+                var emission = ps.emission;
+                emission.rateOverTime = 0f;
+            }
+        }
 
         void Awake()
         {
             _animator = GetComponent<CharacterAnimator>();
             _container = new GameObject("Sweat").transform;
             _container.SetParent(transform.parent != null ? transform.parent : transform, false);
+
+            if (use3D && Vfx3D.Available && Vfx3D.Library.sweat != null)
+            {
+                _fx3D = Vfx3D.Instantiate(Vfx3D.Library.sweat, transform.position, Quaternion.identity, sweat3DScale, _container);
+                Configure3D(_fx3D, skullRadius, Vfx3D.Library.sweatDropMaterial);
+                _fxSystems = _fx3D.GetComponentsInChildren<ParticleSystem>(true);
+            }
+        }
+
+        void OnDestroy()
+        {
+            if (_fx3D != null) Destroy(_fx3D);
         }
 
         void Update()
@@ -49,6 +109,18 @@ namespace TaintlessGlade
 
             float dt = Time.deltaTime;
             float rate = _animator.IsDashingVisual ? p.sweatDashDrops : p.sweatRunDrops * _animator.Exertion;
+
+            if (_fx3D != null)
+            {
+                _fx3D.transform.position = rig.head.TransformPoint(skullCenter);
+                foreach (ParticleSystem ps in _fxSystems)
+                {
+                    var emission = ps.emission;
+                    emission.rateOverTime = rate;
+                    if (rate > 0.01f && !ps.isPlaying) ps.Play(false);
+                }
+                return;
+            }
             _spawnDebt += rate * dt;
             while (_spawnDebt >= 1f)
             {

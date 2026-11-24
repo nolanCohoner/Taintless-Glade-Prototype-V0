@@ -6,7 +6,8 @@ on:
     types: [completed]
     branches: [main]
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   notify:
@@ -21,16 +22,9 @@ jobs:
       SHA: ${{ github.event.workflow_run.head_sha }}
       ACTOR: ${{ github.event.workflow_run.triggering_actor.login }}
     steps:
+      - uses: actions/checkout@v6
+
       - name: Send the notification
         run: |
-          if [ -z "$WEBHOOK_URL" ]; then
-            echo "::notice::NOTIFY_WEBHOOK_URL is not set, notification skipped"
-            exit 0
-          fi
-          message="CI rouge sur main : ${TITLE} (${SHA:0:7}) par ${ACTOR} - ${RUN_URL}"
-          if [[ "$WEBHOOK_URL" == *discord* ]]; then
-            payload=$(jq -n --arg msg "$message" '{content: $msg, allowed_mentions: {parse: []}}')
-          else
-            payload=$(jq -n --arg msg "$message" '{text: $msg}')
-          fi
-          curl -fsS -X POST -H "Content-Type: application/json" -d "$payload" "$WEBHOOK_URL"
+          export MESSAGE="CI rouge sur main : ${TITLE} (${SHA:0:7}) par ${ACTOR} - ${RUN_URL}"
+          bash .github/scripts/notify.sh

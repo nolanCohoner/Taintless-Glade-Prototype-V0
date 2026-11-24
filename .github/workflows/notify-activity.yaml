@@ -1,0 +1,45 @@
+name: Notify PR activity
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, closed]
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Notify the team
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      (github.event.action == 'ready_for_review' ||
+      (github.event.action == 'opened' && !github.event.pull_request.draft) ||
+      (github.event.action == 'closed' && github.event.pull_request.merged))
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+      ACTION: ${{ github.event.action }}
+      NUMBER: ${{ github.event.pull_request.number }}
+      TITLE: ${{ github.event.pull_request.title }}
+      AUTHOR: ${{ github.event.pull_request.user.login }}
+      MERGED_BY: ${{ github.event.pull_request.merged_by.login }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Send the notification
+        run: |
+          case "$ACTION" in
+            opened)
+              MESSAGE="PR #${NUMBER} ouverte par ${AUTHOR} : ${TITLE} - ${PR_URL}"
+              ;;
+            ready_for_review)
+              MESSAGE="PR #${NUMBER} prete pour relecture (${AUTHOR}) : ${TITLE} - ${PR_URL}"
+              ;;
+            closed)
+              MESSAGE="PR #${NUMBER} fusionnee par ${MERGED_BY} : ${TITLE} - ${PR_URL}"
+              ;;
+          esac
+          export MESSAGE
+          bash .github/scripts/notify.sh

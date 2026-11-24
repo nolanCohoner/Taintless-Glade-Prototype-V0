@@ -82,7 +82,14 @@ git push origin v0.2.0
 
 ## Notifications
 
-Pour être prévenu quand la CI de `main` passe au rouge, ajoute le secret `NOTIFY_WEBHOOK_URL` (Settings → Secrets and variables → Actions) avec l'URL d'un webhook Discord ou Slack.
+Pour recevoir des messages dans Discord ou Slack, ajoute le secret `NOTIFY_WEBHOOK_URL` (Settings → Secrets and variables → Actions) avec l'URL d'un webhook. Sans ce secret, les notifications sont simplement ignorées.
+
+Un message est envoyé quand :
+
+- une PR est ouverte (pas en brouillon) ou passe de brouillon à « prête pour relecture » ;
+- une PR est fusionnée ;
+- la CI de `main` échoue ;
+- une release est publiée (tag `v*`).
 
 ## Issues
 

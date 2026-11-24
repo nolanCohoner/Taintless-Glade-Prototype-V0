@@ -8,6 +8,9 @@ namespace TaintlessGlade
     [ExecuteAlways]
     public class Billboard : MonoBehaviour
     {
+        /// <summary>
+        /// Recopie la rotation de la caméra principale après tous les déplacements de la frame.
+        /// </summary>
         void LateUpdate()
         {
             Camera cam = Camera.main;

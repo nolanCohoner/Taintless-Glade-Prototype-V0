@@ -2,7 +2,7 @@ name: PR summary
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: pr-summary-${{ github.event.pull_request.number }}
@@ -11,6 +11,7 @@ concurrency:
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   summary:
@@ -21,6 +22,8 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      PR_AUTHOR: ${{ github.event.pull_request.user.login }}
       BASE_SHA: ${{ github.event.pull_request.base.sha }}
       HEAD_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
@@ -28,8 +31,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build summary
+      - name: Build summary, labels and alerts
         run: python3 .github/scripts/pr_summary.py > "$RUNNER_TEMP/summary.md"
 
       - name: Post or update the summary comment
-        run: gh pr comment "$PR_NUMBER" --edit-last --create-if-none --body-file "$RUNNER_TEMP/summary.md"
+        run: |
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate --jq '.[] | select(.body | contains("<!-- pr-summary -->")) | .id' | sed -n 1p)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -F body=@"$RUNNER_TEMP/summary.md" > /dev/null
+          else
+            gh pr comment "$PR_NUMBER" --body-file "$RUNNER_TEMP/summary.md"
+          fi

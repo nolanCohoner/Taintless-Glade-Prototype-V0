@@ -113,3 +113,9 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 .idea/
+
+# Git LFS hooks generated locally by scripts/setup-dev.sh
+/.githooks/post-checkout
+/.githooks/post-commit
+/.githooks/post-merge
+/.githooks/pre-push

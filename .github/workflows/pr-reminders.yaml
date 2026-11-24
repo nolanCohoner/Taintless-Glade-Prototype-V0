@@ -1,0 +1,52 @@
+name: PR reminders
+
+on:
+  schedule:
+    - cron: '0 8 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  remind:
+    name: Remind reviewers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      REMIND_AFTER_HOURS: 48
+    steps:
+      - name: Comment on pull requests waiting for a review
+        run: |
+          cutoff=$(date -u -d "$REMIND_AFTER_HOURS hours ago" +%Y-%m-%dT%H:%M:%SZ)
+          gh pr list --state open --limit 100 --json number,isDraft,updatedAt,reviews \
+            --jq ".[] | select((.isDraft | not) and .updatedAt < \"$cutoff\" and (.reviews | length) == 0) | .number" |
+          while read -r number; do
+            already=$(gh pr view "$number" --json comments --jq '[.comments[].body | select(contains("<!-- review-reminder -->"))] | length')
+            if [ "$already" != "0" ]; then
+              continue
+            fi
+            reviewers=$(gh pr view "$number" --json reviewRequests --jq '[.reviewRequests[] | select(.login != null) | "@" + .login] | join(" ")')
+            gh pr comment "$number" --body "<!-- review-reminder -->Cette PR attend une relecture depuis plus de ${REMIND_AFTER_HOURS} h. ${reviewers}"
+            echo "Rappel poste sur #$number"
+          done
+
+  stale:
+    name: Close abandoned pull requests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-issue-stale: -1
+          days-before-issue-close: -1
+          days-before-pr-stale: 14
+          days-before-pr-close: 7
+          exempt-draft-pr: true
+          exempt-pr-labels: keep-open
+          stale-pr-label: stale
+          stale-pr-message: Cette PR est inactive depuis 14 jours. Elle sera fermee dans 7 jours sans nouvelle activite (ajoute le label keep-open pour l'en empecher).
+          close-pr-message: PR fermee pour inactivite. Tu peux la rouvrir a tout moment.

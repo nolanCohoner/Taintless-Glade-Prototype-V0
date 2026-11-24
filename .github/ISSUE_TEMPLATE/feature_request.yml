@@ -1,0 +1,37 @@
+name: Fonctionnalite
+description: Proposer une amelioration ou une nouvelle fonctionnalite
+labels: [enhancement]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Objectif
+      description: Quel probleme cela resout-il, ou quelle experience de jeu cela apporte-t-il ?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposition
+      description: Comment imagines-tu la fonctionnalite ?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criteres d'acceptation
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+  - type: dropdown
+    id: area
+    attributes:
+      label: Domaine
+      options:
+        - Gameplay
+        - Art et animation
+        - Interface (HUD)
+        - Outils et CI
+        - Autre
+    validations:
+      required: true

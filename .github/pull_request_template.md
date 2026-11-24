@@ -18,6 +18,7 @@
 
 ## Qualite
 
+- [ ] La PR est en brouillon (Draft) tant qu'elle n'est pas prete a etre relue
 - [ ] Le titre de la PR suit le format `type: description` (`feat`, `fix`, `chore`, `docs`, `refactor`, `style`, `perf`, `ci`, `build`, `revert`)
 - [ ] Les verifications automatiques de la CI sont vertes
 - [ ] Pas de `TODO` sans issue (`TODO(#12)`)

@@ -17,6 +17,8 @@ jobs:
       GH_REPO: ${{ github.repository }}
       TAG: ${{ github.ref_name }}
     steps:
+      - uses: actions/checkout@v6
+
       - name: Create the release with generated notes
         run: |
           flags=()
@@ -24,3 +26,11 @@ jobs:
             flags+=(--prerelease)
           fi
           gh release create "$TAG" --title "$TAG" --generate-notes --verify-tag "${flags[@]}"
+
+      - name: Notify the team
+        env:
+          WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+        run: |
+          url=$(gh release view "$TAG" --json url --jq .url)
+          export MESSAGE="Release ${TAG} publiee : ${url}"
+          bash .github/scripts/notify.sh

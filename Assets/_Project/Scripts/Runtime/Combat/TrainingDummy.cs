@@ -49,8 +49,7 @@ namespace TaintlessGlade
             if (spritePunch != null) spritePunch.Punch(new Vector3(0.25f, -0.2f, 0f) * (1f + info.knockback * 0.2f));
             if (damageNumbers != null) damageNumbers.Show(info.amount);
             // Avec les effets 3D, les projectiles jouent déjà leur propre impact.
-            if (Vfx3D.Available) { }
-            else if (hitVfxPrefab != null)
+            if (!Vfx3D.Available && hitVfxPrefab != null)
             {
                 Vector3 back = info.direction.sqrMagnitude > 0f ? -info.direction : Vector3.back;
                 Instantiate(hitVfxPrefab, info.point, Quaternion.LookRotation(back));

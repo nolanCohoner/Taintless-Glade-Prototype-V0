@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -u
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if python3 --version >/dev/null 2>&1; then
+  PY=python3
+else
+  PY=python
+fi
+
+status=0
+run() {
+  echo "-> $1"
+  shift
+  "$@" || status=1
+}
+
+run "Project integrity" bash .github/scripts/check_project.sh
+run "References" "$PY" .github/scripts/check_references.py
+run "Packages" "$PY" .github/scripts/check_packages.py
+run "Asset budgets" "$PY" .github/scripts/check_assets.py
+run "Code rules" "$PY" .github/scripts/check_code_rules.py
+
+if command -v dotnet >/dev/null 2>&1; then
+  run "Code format" bash .github/scripts/check_format.sh
+else
+  echo "-> Code format ignore (dotnet introuvable)"
+fi
+
+if [ "$status" -ne 0 ]; then
+  echo "Commit refuse : corrige les erreurs ci-dessus (ou utilise --no-verify en connaissance de cause)."
+fi
+exit "$status"

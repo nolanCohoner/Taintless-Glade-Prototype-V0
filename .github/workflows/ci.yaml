@@ -21,8 +21,45 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
-      - name: Check Unity project integrity
+
+      - name: Project integrity
         run: bash .github/scripts/check_project.sh
+
+      - name: Broken references and missing scripts
+        if: ${{ !cancelled() }}
+        run: python3 .github/scripts/check_references.py
+
+      - name: Unity packages policy
+        if: ${{ !cancelled() }}
+        run: python3 .github/scripts/check_packages.py
+
+      - name: Asset budgets
+        if: ${{ !cancelled() }}
+        run: python3 .github/scripts/check_assets.py
+
+      - name: Code rules
+        if: ${{ !cancelled() }}
+        run: python3 .github/scripts/check_code_rules.py
+
+  code-format:
+    name: Code format
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check C# formatting
+        run: bash .github/scripts/check_format.sh
+
+  secret-scan:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Scan history for secrets
+        run: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo" -w /repo zricethezav/gitleaks:latest git --no-banner --redact --verbose
 
   workflow-lint:
     name: Workflow lint
@@ -35,14 +72,14 @@ jobs:
 
   ci-status:
     name: CI status
-    needs: [project-checks, workflow-lint]
+    needs: [project-checks, code-format, secret-scan, workflow-lint]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
       - name: Fail if a required job failed or was cancelled
         run: |
-          echo "project-checks=${{ needs.project-checks.result }} workflow-lint=${{ needs.workflow-lint.result }}"
+          echo "project-checks=${{ needs.project-checks.result }} code-format=${{ needs.code-format.result }} secret-scan=${{ needs.secret-scan.result }} workflow-lint=${{ needs.workflow-lint.result }}"
           if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then
             exit 1
           fi

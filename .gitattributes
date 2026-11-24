@@ -169,3 +169,12 @@ Packages/packages-lock.json linguist-generated
 
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
+
+# CI scripts and configuration must keep LF line endings on every platform
+*.sh                    text eol=lf
+*.py                    text eol=lf
+.githooks/*             text eol=lf
+.editorconfig           text eol=lf
+.gitleaks.toml          text eol=lf
+*.yaml                  text eol=lf
+*.yml                   text eol=lf

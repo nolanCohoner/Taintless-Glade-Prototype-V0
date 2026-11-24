@@ -1,0 +1,35 @@
+name: PR summary
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: pr-summary-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  summary:
+    name: PR summary
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Build summary
+        run: python3 .github/scripts/pr_summary.py > "$RUNNER_TEMP/summary.md"
+
+      - name: Post or update the summary comment
+        run: gh pr comment "$PR_NUMBER" --edit-last --create-if-none --body-file "$RUNNER_TEMP/summary.md"

@@ -1,0 +1,2 @@
+com.unity.ai.assistant@2.20.0-pre.2
+com.unity.pipeline@0.8.0-exp.1

@@ -1,0 +1,42 @@
+name: Coucou PR
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  coucou:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: coucou/run-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create a branch with a change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          mkdir -p coucou
+          echo "Coucou depuis la CI, run $GITHUB_RUN_ID" > coucou/message.txt
+          git add coucou/message.txt
+          git commit -m "Coucou depuis la CI"
+          git push origin "$BRANCH"
+
+      - name: Open the pull request
+        run: |
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Coucou PR $GITHUB_RUN_ID" \
+            --body "Pull request creee automatiquement par GitHub Actions."
+
+      - name: Post a comment then edit it
+        run: |
+          gh pr comment "$BRANCH" --body "Coucou, premier message"
+          gh pr comment "$BRANCH" --edit-last --body "Coucou, message modifie par la CI (run $GITHUB_RUN_ID)"

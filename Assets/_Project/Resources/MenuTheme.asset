@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d22f23a76294e4b88f44d09f5e4fd1, type: 3}
+  m_Name: MenuTheme
+  m_EditorClassIdentifier: TaintlessGlade.Runtime::TaintlessGlade.MenuTheme
+  font: {fileID: 11400000, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
+  panelFill: {fileID: 21300000, guid: 9d91d02375bc2da43853817faf8f4c6c, type: 3}
+  panelBorder: {fileID: 21300000, guid: b75f66aa2907ed047acab7497c97e76e, type: 3}
+  buttonBorder: {fileID: 21300000, guid: 8806bd49c3aba774f841c15756319a1e, type: 3}
+  divider: {fileID: 21300000, guid: 6e68bdbe63f8fad40b1c13fd7631c9d6, type: 3}
+  dividerFade: {fileID: 21300000, guid: fe78c51223195bf4d841f6be1088484b, type: 3}
+  softCircle: {fileID: 21300000, guid: 15814e5ed25d6fc42bc85f7a2d763b00, type: 3}
+  pixel: {fileID: 21300000, guid: 4d5546c2850278d4a96315651635c722, type: 3}
+  arrowLeft: {fileID: 21300000, guid: 49ac385e8bbd3434087167cbf13a686a, type: 3}
+  arrowRight: {fileID: 21300000, guid: 79efcc6b0b4cee74db5d47425701542f, type: 3}
+  lockIcon: {fileID: 21300000, guid: 2482df1fd6f21d2499e10573ed592a77, type: 3}
+  doorIcon: {fileID: 21300000, guid: 502fd0b16a46b4047b1dc0b215e183b4, type: 3}
+  text: {r: 1, g: 1, b: 1, a: 1}
+  textDim: {r: 1, g: 1, b: 1, a: 0.55}
+  accent: {r: 0.62, g: 0.78, b: 0.42, a: 1}
+  danger: {r: 0.92, g: 0.2, b: 0.22, a: 1}
+  panelTint: {r: 0.04, g: 0.06, b: 0.07, a: 0.96}
+  borderTint: {r: 1, g: 1, b: 1, a: 0.92}
+  cursorMenu: {fileID: 2800000, guid: 213aeb22b750eea46943e331b9b67375, type: 3}
+  menuHotspot: {x: 10, y: 6}
+  cursorHover: {fileID: 2800000, guid: 8b462276a516b7e4c9b9b53f60f8d7ac, type: 3}
+  hoverHotspot: {x: 9, y: 5}
+  cursorGame: {fileID: 2800000, guid: 7ee579c94a76cbb4188033f6f93ed20a, type: 3}
+  gameHotspot: {x: 16, y: 16}
+  cursorBusy: {fileID: 2800000, guid: abd851547ddb1ee479ae9b70e74994ba, type: 3}
+  busyHotspot: {x: 16, y: 16}
+  cursorForbidden: {fileID: 2800000, guid: c9ecadd6275a14f43b1102ab47c09f3c, type: 3}
+  forbiddenHotspot: {x: 16, y: 16}

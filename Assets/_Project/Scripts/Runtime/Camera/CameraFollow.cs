@@ -39,6 +39,8 @@ namespace TaintlessGlade
 
         public void Shake(float strength, float duration)
         {
+            strength *= GameSettings.ScreenShake;
+            if (strength <= 0f) return;
             if (strength < _shakeStrength * (_shakeTimer / Mathf.Max(_shakeDuration, 0.0001f))) return;
             _shakeStrength = strength;
             _shakeDuration = duration;

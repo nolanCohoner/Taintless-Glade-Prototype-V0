@@ -79,7 +79,7 @@ namespace TaintlessGlade
             }
             source.transform.position = position;
             source.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
-            source.PlayOneShot(clip, volume);
+            source.PlayOneShot(clip, volume * GameSettings.SfxVolume);
         }
     }
 }

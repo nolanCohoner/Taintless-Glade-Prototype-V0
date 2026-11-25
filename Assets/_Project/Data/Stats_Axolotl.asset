@@ -12,7 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5687bccb421855a4c8fab453ac37d40c, type: 3}
   m_Name: Stats_Axolotl
   m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.CharacterStats
+  id: axolotl
   displayName: Axolotl
+  playable: 1
+  perkTitle: "R\xE9g\xE9n\xE9ration passive"
+  perkText: "R\xE9cup\xE8re de la vie petit \xE0 petit, sans rien faire."
+  weaponName: Crachat
+  weaponText: "Tir \xE0 distance. Maintenir pour charger un tir plus puissant."
+  bonusHp: 
+  silhouette: {fileID: 0}
+  visualPrefab: {fileID: 0}
+  projectilePrefab: {fileID: 0}
   placeholderColor: {r: 1, g: 0.6, b: 0.78, a: 1}
   maxHp: 3
   dashSpeed: 2

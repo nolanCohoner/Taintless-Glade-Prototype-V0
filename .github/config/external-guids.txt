@@ -1,3 +1,6 @@
+39fa3d8997a24136984ca6e2c99902bc  # com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/Actions/InputActionAsset.cs.meta
+fc1515ab76e54f068e2f2207940fab32  # com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/Actions/InputActionReference.cs.meta
+01614664b831546d2ae94a42149d80ac  # com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/Plugins/UI/InputSystemUIInputModule.cs.meta
 172515602e62fb746b5d573b38a5fe58  # com.unity.render-pipelines.core@a4c9a9793789/Runtime/Volume/Volume.cs.meta
 d7fd9488000d3734a9e00ee676215985  # com.unity.render-pipelines.core@a4c9a9793789/Runtime/Volume/VolumeProfile.cs.meta
 0b2db86121404754db890f4c8dfe81b2  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/Overrides/Bloom.cs.meta
@@ -8,3 +11,8 @@ a79441f348de89743a2939f4d699eac1  # com.unity.render-pipelines.universal@d7774c2
 474bcb49853aa07438625e644c072ee6  # com.unity.render-pipelines.universal@d7774c218bdf/Runtime/UniversalAdditionalLightData.cs.meta
 71c1514a6bd24e1e882cebbe1904ce04  # com.unity.ugui@1c4864518158/Runtime/TMP/TMP_FontAsset.cs.meta
 9541d86e2fd84c1d9990edf0852d74ab  # com.unity.ugui@1c4864518158/Runtime/TMP/TextMeshPro.cs.meta
+f4688fdb7df04437aeb418b961361dc5  # com.unity.ugui@1c4864518158/Runtime/TMP/TextMeshProUGUI.cs.meta
+76c392e42b5098c458856cdf6ecaaaa1  # com.unity.ugui@1c4864518158/Runtime/UGUI/EventSystem/EventSystem.cs.meta
+dc42784cf147c0c48a680349fa168899  # com.unity.ugui@1c4864518158/Runtime/UGUI/UI/Core/GraphicRaycaster.cs.meta
+fe87c0e1cc204ed48ad3b37840f39efc  # com.unity.ugui@1c4864518158/Runtime/UGUI/UI/Core/Image.cs.meta
+0cd44c1031e13a943bb63640046fad76  # com.unity.ugui@1c4864518158/Runtime/UGUI/UI/Core/Layout/CanvasScaler.cs.meta

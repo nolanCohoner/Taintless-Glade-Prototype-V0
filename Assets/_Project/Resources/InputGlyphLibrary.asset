@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: InputGlyphLibrary
+  m_EditorClassIdentifier: TaintlessGlade.Runtime:TaintlessGlade:InputGlyphLibrary
+  mouse: {fileID: 21300000, guid: 4876de0eba2327340965f49e81bf4270, type: 3}
+  mouseLeft: {fileID: 21300000, guid: e1b2141b28d972947bcc4fcc5eb1400d, type: 3}
+  mouseRight: {fileID: 21300000, guid: fd8ad635ada140f4c9611fc137cccd9b, type: 3}
+  mouseMiddle: {fileID: 21300000, guid: 186ef4e9d0605d445a1419bd0a05bb0c, type: 3}
+  padSouth: {fileID: 21300000, guid: d5932519eb7edce48a2621eeb7cb5429, type: 3}
+  padEast: {fileID: 21300000, guid: 5eba3487aea8fcf40814a65c53c4bb7a, type: 3}
+  padWest: {fileID: 21300000, guid: 292c8ca70665aad46bb0de494672f143, type: 3}
+  padNorth: {fileID: 21300000, guid: 6b57ddda8088db64c949e0db6c26cfab, type: 3}
+  padDpad: {fileID: 0}

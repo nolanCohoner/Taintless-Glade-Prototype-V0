@@ -1279,7 +1279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaintlessGlade.PlayerAttack
   projectilePrefab: {fileID: 9046890218751168805, guid: 5e073e04a3fde5d4a87be2bb1abd87ec, type: 3}
   muzzleVfxPrefab: {fileID: 6320443169373900884, guid: 46be67fb42bf4c94798ccaab0883993c, type: 3}
-  use2DMuzzle: 1
   use3DMuzzle: 1
   muzzleScale: 0.6
   spawnHeight: 0.5
@@ -1287,7 +1286,16 @@ MonoBehaviour:
   maxSpread: 2.5
   spreadPerShot: 0.7
   spreadResetTime: 0.45
+  chargeDelay: 0.22
+  chargeTime: 0.9
+  minCharge: 0.2
+  chargedDamageMultiplier: 2.5
+  chargedRecoil: 5
+  chargedCooldown: 0.45
+  boltSpeedMultiplier: 1.5
   recoil: 2
+  colorMode: 1
+  bulletStyle: 0
   shotClips: []
 --- !u!114 &376025797
 MonoBehaviour:
@@ -7498,7 +7506,6 @@ MonoBehaviour:
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.08
   hitVfxPrefab: {fileID: 6600054550017831081, guid: f667126cdb0d75440913696ebb3c8516, type: 3}
-  use2DHitFx: 1
   cameraShakeStrength: 0.08
   cameraShakeDuration: 0.1
   damageNumbers: {fileID: 623044605}
@@ -7632,7 +7639,6 @@ MonoBehaviour:
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.08
   hitVfxPrefab: {fileID: 6600054550017831081, guid: f667126cdb0d75440913696ebb3c8516, type: 3}
-  use2DHitFx: 1
   cameraShakeStrength: 0.08
   cameraShakeDuration: 0.1
   damageNumbers: {fileID: 661156429}
@@ -7855,8 +7861,8 @@ MonoBehaviour:
 
     DPS 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
-  m_sharedMaterial: {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
+  m_sharedMaterial: {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7953,7 +7959,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  - {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8950,8 +8956,8 @@ MonoBehaviour:
 
     DPS 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
-  m_sharedMaterial: {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
+  m_sharedMaterial: {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9048,7 +9054,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  - {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15068,7 +15074,6 @@ MonoBehaviour:
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.08
   hitVfxPrefab: {fileID: 6600054550017831081, guid: f667126cdb0d75440913696ebb3c8516, type: 3}
-  use2DHitFx: 1
   cameraShakeStrength: 0.08
   cameraShakeDuration: 0.1
   damageNumbers: {fileID: 1170408349}
@@ -15744,7 +15749,6 @@ MonoBehaviour:
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.08
   hitVfxPrefab: {fileID: 6600054550017831081, guid: f667126cdb0d75440913696ebb3c8516, type: 3}
-  use2DHitFx: 1
   cameraShakeStrength: 0.08
   cameraShakeDuration: 0.1
   damageNumbers: {fileID: 1442750679}
@@ -16326,8 +16330,8 @@ MonoBehaviour:
 
     DPS 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
-  m_sharedMaterial: {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
+  m_sharedMaterial: {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16424,7 +16428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  - {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17188,8 +17192,8 @@ MonoBehaviour:
 
     DPS 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
-  m_sharedMaterial: {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
+  m_sharedMaterial: {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17286,7 +17290,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 857721652866232355, guid: 1ded0cb9e0606b7489a56120906ba6ab, type: 2}
+  - {fileID: 398093800126909234, guid: 05ed291433a770247a6b6f195b8cabe8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

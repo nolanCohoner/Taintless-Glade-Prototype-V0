@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5687bccb421855a4c8fab453ac37d40c, type: 3}
+  m_Name: Stats_Bat
+  m_EditorClassIdentifier: TaintlessGlade.Runtime::TaintlessGlade.CharacterStats
+  id: bat
+  displayName: Chauve-souris
+  playable: 0
+  perkTitle: Vol
+  perkText: Survole les obstacles.
+  weaponName: Ultra-son
+  weaponText: Onde qui rebondit sur les murs.
+  bonusHp: 3 PV de feuilles
+  silhouette: {fileID: 21300000, guid: 450b285f4e176f641a352a48d69785d0, type: 3}
+  visualPrefab: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  placeholderColor: {r: 0.4, g: 0.3, b: 0.5, a: 1}
+  maxHp: 3
+  dashSpeed: 2
+  speed: 2
+  shotSpeed: 1
+  shotLength: 2
+  attack: 3
+  luck: 0
+  attacksPerSecond: 3
+  speedToMetersPerSecond: 2.5
+  dashToMeters: 1.75
+  shotSpeedToMetersPerSecond: 16
+  shotLengthToMeters: 4.5

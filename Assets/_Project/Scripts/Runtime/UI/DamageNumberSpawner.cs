@@ -21,7 +21,7 @@ namespace TaintlessGlade
 
         public void Show(float amount)
         {
-            if (prefab == null) return;
+            if (prefab == null || !GameSettings.DamageNumbers) return;
 
             if (accumulateCombos && _current != null && _current.IsAccumulating)
             {

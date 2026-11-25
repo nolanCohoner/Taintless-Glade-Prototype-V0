@@ -22,7 +22,7 @@ jobs:
     runs-on: [self-hosted, windows, unity]
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           lfs: true
           # Garde le dossier Library (cache d'import Unity) d'un run a l'autre : sans lui, chaque run reimporte tout.
@@ -41,7 +41,7 @@ jobs:
 
       - name: Publier les resultats
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: unity-results-${{ github.run_number }}
           path: |

@@ -10,22 +10,24 @@ Le workflow de release publie cette section dans les notes de la release GitHub.
 
 ## [Unreleased]
 
+Première version jouable du prototype (candidate : `v0.1.0-rc1`).
+
 ### Added
+- Salle de test jouable : Axolotl (déplacement, dash, crachat, tir chargé), mannequin d'entraînement, HUD de vie.
 - Menu de démarrage (scène `MainMenu`) : décor 3D, feuillage 2D généré par script, animations nerveuses et particules.
-- Sélection du personnage en roulette 3D, avec stats, atout et arme. Seul l'Axolotl est jouable pour l'instant.
+- Sélection du personnage en roulette 3D, avec stats, atout et arme. Seul l'Axolotl est jouable pour l'instant ; les cinq autres personnages apparaissent en silhouette « Bientôt disponible ».
 - Choix de la salle (grille 3 x 2 avec pages). Seule la salle de test existe.
 - Paramètres : contrôles réaffectables (clavier, souris, manette), affichage, audio, jeu, avec enregistrement et réinitialisation.
 - Curseurs de souris Kenney selon le contexte (menu, survol, viseur en jeu, chargement).
-- Pipeline CI/CD : tests Unity, build Windows et release GitHub avec archive `TaintlessGlade-windows-x64.zip`.
+- Intégration continue : contrôles du projet Unity, format du code, détection de secrets, notifications.
+- Tests Unity EditMode et PlayMode, exécutés sur un runner auto-hébergé après chaque push sur `dev` et `main`.
+- Build Windows 64 bits (`Tools > Taintless Glade > Build > Windows 64 bits`, ou en CI) et release GitHub avec l'archive `TaintlessGlade-windows-x64.zip`.
 
 ### Changed
 - Police globale : Fredoka remplace Blackadder.
 - Le mode Play démarre toujours sur le menu de démarrage.
 - Le HUD de jeu est construit à chaque chargement de salle, plus dans le menu.
-- Deux branches principales : `dev` (instable) et `main` (stable).
+- Deux branches principales : `dev` (instable, où l'on fusionne tout) et `main` (stable, validée en préproduction).
 
-## [0.1.0] - 2026-11-25
-
-### Added
-- Salle de test jouable : Axolotl (déplacement, dash, crachat, tir chargé), mannequin d'entraînement, HUD de vie.
-- Intégration continue : contrôles du projet Unity, format du code, détection de secrets, notifications.
+### Fixed
+- Le test d'intégrité des stats accepte les personnages à 0 PV protégés par autre chose (le Poisson et son bocal).

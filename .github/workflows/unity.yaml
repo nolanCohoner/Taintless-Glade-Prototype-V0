@@ -1,0 +1,52 @@
+name: Unity
+
+# Tests Unity et build de controle, sur le runner auto-heberge (le PC ou Unity est active avec la licence Personal).
+# Declenche uniquement par un push sur dev / main (jamais par une PR : un runner auto-heberge ne doit pas executer du code externe).
+#   dev  : tests EditMode (rapides)
+#   main : tests EditMode + PlayMode + build Windows
+on:
+  push:
+    branches: [dev, main]
+  workflow_dispatch:
+
+concurrency:
+  group: unity-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  unity:
+    name: Tests Unity et build
+    runs-on: [self-hosted, windows, unity]
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          lfs: true
+          # Garde le dossier Library (cache d'import Unity) d'un run a l'autre : sans lui, chaque run reimporte tout.
+          clean: false
+
+      - name: Tests EditMode
+        run: .github/scripts/unity.ps1 -Action test -Mode EditMode
+
+      - name: Tests PlayMode
+        if: github.ref == 'refs/heads/main'
+        run: .github/scripts/unity.ps1 -Action test -Mode PlayMode
+
+      - name: Build Windows
+        if: github.ref == 'refs/heads/main'
+        run: .github/scripts/unity.ps1 -Action build -Version 0.0.0-${{ github.run_number }}
+
+      - name: Publier les resultats
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-results-${{ github.run_number }}
+          path: |
+            ci-output/*.xml
+            ci-output/*.log
+            ci-output/*.zip
+          if-no-files-found: ignore
+          retention-days: 14

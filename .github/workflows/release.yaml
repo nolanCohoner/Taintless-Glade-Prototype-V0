@@ -1,0 +1,89 @@
+name: Release
+
+# Un tag vX.Y.Z (release stable, sur main) ou vX.Y.Z-rc1 (pre-production, sur dev) :
+#   1. construit l'exe Windows sur le runner auto-heberge,
+#   2. cree la release GitHub avec le changelog et l'archive TaintlessGlade-windows-x64.zip.
+# Lien permanent : https://github.com/<owner>/<repo>/releases/download/vX.Y.Z/TaintlessGlade-windows-x64.zip
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Windows
+    runs-on: [self-hosted, windows, unity]
+    timeout-minutes: 90
+    env:
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          lfs: true
+          clean: false
+
+      - name: Build
+        run: |
+          $version = $env:TAG.TrimStart('v')
+          .github/scripts/unity.ps1 -Action build -Version $version
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TaintlessGlade-windows-x64
+          path: ci-output/TaintlessGlade-windows-x64.zip
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Publier la release
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Verifier la branche du tag
+        run: |
+          git fetch origin main dev || true
+          if [[ "$TAG" == *-* ]]; then
+            echo "Pre-release : le tag peut venir de dev ou de main."
+          elif ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::Une release stable doit etre taguee sur main. Fusionne dev dans main, puis tague."
+            exit 1
+          fi
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: TaintlessGlade-windows-x64
+          path: dist
+
+      - name: Extraire le changelog de cette version
+        run: bash .github/scripts/changelog_notes.sh "$TAG" > release-notes.md
+
+      - name: Creer la release
+        run: |
+          flags=()
+          if [[ "$TAG" == *-* ]]; then
+            flags+=(--prerelease)
+          fi
+          # Notes = section du CHANGELOG.md, suivie de la liste generee des PR (categories de .github/release.yml).
+          gh release create "$TAG" dist/TaintlessGlade-windows-x64.zip CHANGELOG.md \
+            --title "$TAG" --notes-file release-notes.md --generate-notes --verify-tag "${flags[@]}"
+
+      - name: Notify the team
+        env:
+          WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+        run: |
+          url=$(gh release view "$TAG" --json url --jq .url)
+          export MESSAGE="Release ${TAG} publiee : ${url}"
+          bash .github/scripts/notify.sh

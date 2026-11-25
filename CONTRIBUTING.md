@@ -12,11 +12,13 @@
 
 ## Branches et pull requests
 
-- Ne travaille jamais directement sur `main` : crée une branche `type/sujet-court` (ex. `feat/hud-coeurs`, `fix/dash-collision`).
+- Deux branches principales : **`dev`** (instable : tout le travail y est fusionné) et **`main`** (stable : uniquement ce qui a été validé en préproduction).
+- Ne travaille jamais directement sur `dev` ou `main` : crée une branche `type/sujet-court` **depuis `dev`** (ex. `feat/hud-coeurs`, `fix/dash-collision`) et ouvre ta PR vers `dev`.
+- `main` ne reçoit que des PR depuis `dev` (release) ou `hotfix/*` (correctif urgent, à reporter ensuite dans `dev`).
 - Ouvre ta PR en **brouillon (Draft)** tant qu'elle n'est pas prête : la CI tourne, mais aucun relecteur n'est sollicité. Clique sur « Ready for review » quand c'est bon.
 - Le **titre de la PR** suit le format `type: description` ou `type(scope): description`. Types : `feat`, `fix`, `chore`, `docs`, `refactor`, `style`, `perf`, `ci`, `build`, `revert`.
 - Garde les PR **petites** : au-delà de 500 lignes de code modifiées, une alerte et le label `size/large` apparaissent.
-- La fusion se fait en **squash** : le titre de la PR devient le message du commit sur `main`.
+- Vers `dev`, la fusion se fait en **squash** : le titre de la PR devient le message du commit. De `dev` vers `main`, utilise un **merge commit** pour garder l'historique.
 - Remplis la checklist du modèle de PR, et joins une capture ou une vidéo pour tout changement visible.
 
 ## Relecture
@@ -59,7 +61,7 @@
 
 ## Vérifications automatiques
 
-Chaque PR et chaque push sur `main` lancent la CI :
+Chaque PR et chaque push sur `dev` ou `main` lancent la CI :
 
 | Contrôle | Ce qu'il détecte |
 | --- | --- |
@@ -71,14 +73,47 @@ Chaque PR et chaque push sur `main` lancent la CI :
 
 Les mêmes contrôles tournent chez toi avant chaque commit grâce au hook Git installé par `scripts/setup-dev.sh`. Pour un commit exceptionnel : `git commit --no-verify`.
 
-## Releases
+## Releases et préproduction
 
-Crée un tag `vX.Y.Z` et pousse-le : une release GitHub est créée avec des notes générées à partir des labels des PR. Un tag contenant un tiret (`v0.2.0-rc1`) est marqué comme pré-release. Le label `ignore-for-release` exclut une PR des notes.
+Niveaux de qualité croissants :
 
-```
-git tag v0.2.0
-git push origin v0.2.0
-```
+| Branche | Contrôles |
+| --- | --- |
+| PR vers `dev` ou `main` | Project checks, format, secrets, lint des workflows, titre de PR |
+| `dev` (après fusion) | Les contrôles ci-dessus + **tests Unity EditMode** |
+| `main` (après fusion) | Les contrôles ci-dessus + tests EditMode + **tests PlayMode** + **build Windows** |
+
+Les jobs Unity (workflow `Unity`) tournent sur un **runner auto-hébergé** (voir plus bas) uniquement après un push, jamais sur une PR.
+
+Cycle d'une version :
+
+1. **Préproduction** : sur `dev`, ajoute la section de la version dans `CHANGELOG.md` (déplace le contenu de `[Unreleased]` vers `## [X.Y.Z] - AAAA-MM-JJ`), puis tague un candidat. Une pré-release GitHub est créée avec l'exe Windows, à tester.
+   ```
+   git tag v0.2.0-rc1
+   git push origin v0.2.0-rc1
+   ```
+2. **Release** : une fois le candidat validé, ouvre une PR `dev` → `main` et fusionne-la, puis tague `main`. La release GitHub contient les notes du changelog, la liste des PR et l'archive `TaintlessGlade-windows-x64.zip`.
+   ```
+   git switch main && git pull
+   git tag v0.2.0
+   git push origin v0.2.0
+   ```
+3. Le lien de téléchargement est prévisible : `https://github.com/<owner>/<repo>/releases/download/v0.2.0/TaintlessGlade-windows-x64.zip`.
+
+Une release stable doit être taguée sur `main` (le workflow refuse sinon) et nécessite une section dans `CHANGELOG.md`. Un tag contenant un tiret (`v0.2.0-rc1`) est une pré-release. Le label `ignore-for-release` exclut une PR de la liste générée.
+
+Pour tester le build en local : `Tools > Taintless Glade > Build > Windows 64 bits` (dossier `Builds/`, ignoré par Git).
+
+## Runner auto-hébergé (jobs Unity)
+
+Le build et les tests Unity tournent sur un PC où Unity 6000.5.9f1 est installé **et activé avec la licence Personal** (Unity Hub connecté au compte).
+
+1. Sur GitHub : Settings → Actions → Runners → **New self-hosted runner** → Windows. Suis les commandes affichées.
+2. À la configuration, ajoute les étiquettes `windows,unity` (`./config.cmd --labels windows,unity`).
+3. Installe-le comme service (`./svc.cmd install` puis `./svc.cmd start`, ou lance `run.cmd`) : le PC doit être allumé et l'éditeur Unity fermé pendant un run.
+4. Si Unity n'est pas dans `C:\Program Files\Unity\Hub\Editor\<version>\`, définis la variable d'environnement `UNITY_PATH` (chemin de `Unity.exe`).
+
+Ne laisse jamais ce runner exécuter les PR de forks : les workflows Unity ne se déclenchent que sur `push` (dev, main, tags).
 
 ## Notifications
 

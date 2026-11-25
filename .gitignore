@@ -119,3 +119,7 @@ InitTestScene*.unity*
 /.githooks/post-commit
 /.githooks/post-merge
 /.githooks/pre-push
+
+# Sorties locales de .github/scripts/unity.ps1
+ci-output/
+Builds/

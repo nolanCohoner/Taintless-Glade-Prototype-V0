@@ -63,7 +63,8 @@ namespace TaintlessGlade.Tests.EditMode
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 var stats = AssetDatabase.LoadAssetAtPath<CharacterStats>(path);
                 Assert.IsNotNull(stats, path);
-                Assert.GreaterOrEqual(stats.maxHp, 1, $"{path}: maxHp");
+                // Un personnage sans PV (ex. le Poisson) doit avoir une autre protection, décrite dans bonusHp.
+                Assert.IsTrue(stats.maxHp >= 1 || (stats.maxHp == 0 && !string.IsNullOrEmpty(stats.bonusHp)), $"{path}: maxHp (0 PV sans bonusHp)");
                 Assert.Greater(stats.speed, 0f, $"{path}: speed");
                 Assert.Greater(stats.dashSpeed, 0f, $"{path}: dashSpeed");
                 Assert.Greater(stats.shotSpeed, 0f, $"{path}: shotSpeed");
